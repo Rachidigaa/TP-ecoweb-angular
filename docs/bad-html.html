@@ -91,3 +91,42 @@
 
   </body>
 </html>
+
+<!-- Mauvaise pratique : modifier le DOM pendant son parcours -->
+<section>
+  <h2>Modifier le DOM en le traversant (mauvaise pratique)</h2>
+  <p>Modifier la structure du DOM pendant l'itération peut créer des boucles infinies ou amplifier le coût en CPU (collections vivantes). Évitez d'ajouter ou de retirer des éléments directement pendant le parcours; collectez d'abord les cibles, puis modifiez-les.</p>
+
+  <h3>Exemple dangereux (native, <code>getElementsByTagName</code> renvoie une collection vivante)</h3>
+  <pre>
+// Mauvais : getElementsByTagName renvoie une collection vivante -> l'ajout d'éléments
+// augmente la longueur pendant l'itération et peut rendre la boucle infinie
+var links = document.getElementsByTagName('a');
+for (var i = 0; i &lt; links.length; i++) {
+  if (links[i].classList.contains('extlink')) {
+    var a = document.createElement('a');
+    a.className = 'extlink';
+    document.body.appendChild(a); // la collection 'links' grandit -> risque d'infini
+  }
+}
+  </pre>
+
+  <h3>Exemple dangereux (jQuery)</h3>
+  <pre>
+// Mauvais : modification du DOM pendant la boucle
+$('a.extlink').each(function(index, el) {
+  $(el).after('<a class="extlink">dup</a>');
+});
+  </pre>
+
+  <h3>Bonne pratique</h3>
+  <pre>
+// Bon : collecter d'abord, puis modifier
+var toUpdate = [];
+var links = document.querySelectorAll('a.extlink'); // NodeList statique
+links.forEach(function(el) { toUpdate.push(el); });
+toUpdate.forEach(function(el) { el.setAttribute('rel', 'external nofollow'); });
+  </pre>
+
+  <p>Conseil : préférez les sélections statiques (<code>querySelectorAll</code>), stockez les éléments dans un tableau temporaire et appliquez les modifications ensuite en une seule passe pour éviter les itérations prolongées et les effets de bord.</p>
+</section>

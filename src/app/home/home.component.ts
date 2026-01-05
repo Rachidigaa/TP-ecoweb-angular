@@ -110,6 +110,43 @@ export default class HomeComponent implements OnInit {
       console.log('Utilisation de jQuery pour une tâche mineure (mauvais exemple)');
     }
 
+    // Mauvaise pratique : modifier le DOM pendant son parcours -> peut provoquer une boucle infinie
+    (function badDomTraverse() {
+      try {
+        // Dangerous native example: getElementsByTagName returns a live collection
+        const links = document.getElementsByTagName('a');
+        // WARNING: adding elements to document.body while iterating 'links' increases links.length
+        // which can make this loop effectively infinite. We add a safety cap to avoid locking the page.
+        let iterations = 0;
+        const MAX = 1000; // safety guard for demo
+        for (let i = 0; i < links.length; i++) {
+          const a = links[i];
+          if (a && a.classList && a.classList.contains('extlink')) {
+            const newA = document.createElement('a');
+            newA.href = '#';
+            newA.className = 'extlink';
+            newA.textContent = 'extra';
+            document.body.appendChild(newA); // modifies live collection
+          }
+          iterations++;
+          if (iterations > MAX) {
+            console.warn('Aborting bad DOM traversal demo to avoid infinite loop');
+            break;
+          }
+        }
+
+        // Dangerous jQuery example: modifying DOM during each
+        if ((window as any).$) {
+          (window as any)('a.extlink').each(function(i: number, el: Element) {
+            // This appends new elements and may make traversal costly
+            (window as any)(el).after('<a class="extlink">dup</a>');
+          });
+        }
+      } catch (e) {
+        console.error('Erreur dans la démo mauvaise pratique DOM traversal', e);
+      }
+    })();
+
   // Mauvaise pratique : animation JS lourde qui force le layout à chaque frame
   (function startBadJsAnimation() {
     const el = document.getElementById('js-anim-box');
