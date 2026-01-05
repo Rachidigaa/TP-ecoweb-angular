@@ -74,9 +74,8 @@
             [ngClass]="article.favorited ? 'unfavorite-btn' : 'favorite-btn'"
             (click)="toggleFavorite(article)"
           >
-            <i class="fa-solid fa-heart"></i> {{ article.favorited ? 'Unfavorite Article' : 'Favorite Article'}} ({{
-              article.favoritesCount
-            }})
+          <!-- Mauvaise pratique : le design repose uniquement sur des éléments visuels (couleur/icône) sans texte ni contraste suffisant, ce qui augmente la charge cognitive, nuit à l’accessibilité et va à l’encontre des principes de Green UX et d’éco-conception.-->
+            <i class="fa-solid fa-heart"></i>
           </button>
         </ng-container>
         <ng-template #editTmp>
