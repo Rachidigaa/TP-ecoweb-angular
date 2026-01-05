@@ -75,5 +75,24 @@
       <h3>Démo</h3>
       <p>Dans la plupart des cas, remplacez vos petites images bitmap par un SVG ou une font d'icônes pour réduire les transferts et gagner en qualité d'affichage.</p>
 
+      <h2>SVG : non optimisé vs optimisé (exemple pédagogique)</h2>
+      <p>Un SVG non optimisé peut contenir des commentaires, métadonnées et définitions inutilisées qui alourdissent le fichier. Minimisez et nettoyez vos SVG (SVGO/SVGOMG) avant mise en production.</p>
+
+      <section>
+        <div style="display:flex; gap:2rem; align-items:center;">
+          <figure>
+            <img src="/assets/images/icon-unoptimized.svg" alt="SVG non optimisé" width="64" height="64">
+            <figcaption>SVG non optimisé (métadonnées, commentaires)</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/images/icon-optimized.svg" alt="SVG optimisé" width="64" height="64">
+            <figcaption>SVG optimisé (minifié)</figcaption>
+          </figure>
+        </div>
+
+        <p>Gain typique : plusieurs dizaines de pourcents en minification, et encore plus après gzip.</p>
+        <p>Outils recommandés : <a href="https://jakearchibald.github.io/svgomg/">SVGOMG</a>, <a href="https://github.com/svg/svgo">SVGO</a>.</p>
+      </section>
+
   </body>
 </html>
