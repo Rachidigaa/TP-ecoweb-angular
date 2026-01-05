@@ -18,4 +18,12 @@
   <div class="col-3">
     <app-tags (selectTag)="selectTag($event)"></app-tags>
   </div>
+
+  <!-- Démo pédagogique : mauvaise pratique image (utiliser une grande image comme vignette sans srcset) -->
+  <section class="bad-image-demo">
+    <h2>Exemple : vignette mal optimisée</h2>
+    <!-- Mauvais : image très large téléchargée, affichée petite -->
+    <img id="demo-large-thumb" src="../../assets/16note.png" alt="Vignette mal optimisée" style="width:70px; height:60px;">
+    <p>Code : &lt;img src="/assets/images/large-photo-1920x1080.png" style="width:70px;height:60px;"&gt;</p>
+  </section>
 </div>

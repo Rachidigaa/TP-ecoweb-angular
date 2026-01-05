@@ -1,0 +1,53 @@
+<!--
+  Exemple de mauvaise pratique : images non optimisées / pas de `srcset`
+  - Chargez des images adaptées à la taille d'affichage pour économiser la bande passante.
+  - Utilisez `srcset` / `<picture>` / `sizes` pour servir des variantes responsives.
+  - Définissez `width` et `height` (ou CSS) pour éviter le layout shift.
+  - Comparez les pixels chargés vs pixels affichés (tools: yellowlab.tools, Lighthouse).
+-->
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exemples images mal optimisées (mauvaise pratique)</title>
+  </head>
+  <body>
+
+    <h1>Mauvaise pratique : thumbs générées par mise à l'échelle CSS d'une grande image</h1>
+
+    <!-- Mauvais : la même image 1920×1080 est utilisée partout, affichée à 70×60 en vignette -->
+    <section>
+      <h2>Thumbnail non responsive (mauvais)</h2>
+      <p>Image source (1920×1080, ~200KB) utilisée comme vignette 70×60 : téléchargement inutilement lourd.</p>
+      <img id="thumb-bad" src="/assets/images/large-photo-1920x1080.png"
+           alt="Vignette mal optimisée">
+      <pre>
+&lt;img id="thumb-bad" src="/assets/images/large-photo-1920x1080.png" alt="Vignette mal optimisée"&gt;
+      </pre>
+    </section>
+
+    <h2>Mauvaise pratique : pas de srcset ni de picture</h2>
+    <p>Sans <code>srcset</code>, le navigateur télécharge le plus grand fichier et le met en cache pour toutes les tailles d'écran.</p>
+
+    <!-- Bon exemple (commenté) : utiliser srcset/sizes/picture pour servir des images adaptées -->
+    <section>
+      <h2>Bonne pratique (exemple commenté)</h2>
+      <p>Utiliser <code>srcset</code> pour fournir des alternatives et <code>sizes</code> pour informer le navigateur :</p>
+      <pre>
+&lt;img src="image_small.png" alt="" width="70" height="60"
+     srcset="image_small.png 70w, image_medium.png 640w, image_large.png 1920w"
+     sizes="(max-width: 640px) 70px, 350px"&gt;
+      </pre>
+    </section>
+
+    <h2>Conseils</h2>
+    <ul>
+      <li>Générez plusieurs variantes (webp/avif + different sizes) et fournissez un <code>srcset</code>.</li>
+      <li>Définissez <code>width</code> & <code>height</code> ou CSS pour réserver l'espace et réduire le Cumulative Layout Shift (CLS).</li>
+      <li>Servez les images optimisées côté serveur (compression, conversion en WebP/AVIF).</li>
+      <li>Comparez poids & pixels avec <a href="https://yellowlab.tools">yellowlab.tools</a> ou Lighthouse.</li>
+    </ul>
+
+  </body>
+</html>
