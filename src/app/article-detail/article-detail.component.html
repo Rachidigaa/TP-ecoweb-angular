@@ -44,7 +44,17 @@
 
   <ng-template #articleMeta let-type="type">
     <div class="article-meta">
-      <img alt="avatar" class="avatar" [src]="article.author.image" />
+        <!-- 
+      ❌ Mauvaise pratique volontaire : 
+      - On charge l'image en full size pour tous les écrans (mobile inclus)
+      - Aucune optimisation mobile-first (pas de srcset / sizes / picture)
+      - Impact réseau inutile sur mobile, dégradation UX
+      -->
+      <img
+      alt="avatar"
+      class="avatar"
+      src="../../assets/bikaary-logo.png"
+      />
       <div class="info">
         <a
           [routerLink]="['/@' + article.author.username]"
