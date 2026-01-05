@@ -177,6 +177,43 @@ export default class HomeComponent implements OnInit {
     requestAnimationFrame(frame);
   })();
 
+  // Démo pédagogique : multiple reflows (mauvais) vs batch update (bon)
+  (function reflowDemo() {
+    const badBtn = document.getElementById('bad-reflow-btn');
+    const goodBtn = document.getElementById('good-reflow-btn');
+    const box = document.getElementById('reflow-box');
+    if (!box || !badBtn || !goodBtn) return;
+    const boxEl = box as HTMLElement;
+
+    function badReflow() {
+      console.log('Démonstration : mauvais reflow (modif successives)');
+      // Mauvais : chaque affectation peut provoquer un reflow
+      boxEl.style.width = '140px';
+      boxEl.style.height = '140px';
+      boxEl.style.marginLeft = '20px';
+      boxEl.style.border = '3px solid #ff0000';
+      boxEl.style.background = 'linear-gradient(45deg,#ffd3d3,#ffb6b6)';
+      // Ces 5 lignes peuvent déclencher plusieurs reflows/repaints
+    }
+
+    function goodReflow() {
+      console.log('Démonstration : bonne pratique (display:none -> modifications -> display)');
+      // Bon : masquer l'élément, appliquer les modifications, puis réafficher
+      // `box` est garanti non-null par la vérification en amont
+      const prevDisplay = boxEl.style.display;
+      boxEl.style.display = 'none'; // 1 reflow
+      boxEl.style.width = '140px';
+      boxEl.style.height = '140px';
+      boxEl.style.marginLeft = '20px';
+      boxEl.style.border = '3px solid #00aa00';
+      boxEl.style.background = 'linear-gradient(45deg,#d3ffd3,#b6ffb6)';
+      boxEl.style.display = prevDisplay || 'block'; // 1 reflow
+    }
+
+    badBtn.addEventListener('click', badReflow);
+    goodBtn.addEventListener('click', goodReflow);
+  })();
+
   // Mauvaise pratique : charger plusieurs scripts externes inutiles
   const scripts = [
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js',

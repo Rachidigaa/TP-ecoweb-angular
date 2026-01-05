@@ -213,4 +213,17 @@ h3 {
      Au lieu de modifier transform, on change 'left' et 'width' souvent. */
 }
 
+/* Démo reflow */
+.reflow-demo { margin-top: 2rem; }
+.reflow-box {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, #d3ffd3, #b6ffb6);
+  border: 1px solid #8fbf8f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 /* Note pédagogique : la bonne pratique serait d'utiliser transform/opacity et prefers-reduced-motion */

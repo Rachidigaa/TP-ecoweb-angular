@@ -91,6 +91,22 @@
     <p>Note : ces animations ne respectent pas la préférence <code>prefers-reduced-motion</code> et modifient des propriétés de layout, ce qui est coûteux.</p>
   </section>
 
+  <!-- Démo : mauvaise pratique - modifications successives causant plusieurs reflows -->
+  <section class="reflow-demo">
+    <h2>Mauvaise pratique : générer plusieurs reflows</h2>
+    <p>Exemple : modifier successivement plusieurs propriétés de style sans masquer l'élément (provoque plusieurs reflows). La bonne pratique est de cacher l'élément, appliquer les changements, puis le réafficher.</p>
+
+    <div style="display:flex; gap:1rem; align-items:center; margin-top:1rem;">
+      <div id="reflow-box" class="reflow-box">Box</div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem;">
+        <button id="bad-reflow-btn">Appliquer mauvais changements</button>
+        <button id="good-reflow-btn">Appliquer bon changement (display:none)</button>
+      </div>
+    </div>
+
+    <p class="note">Les boutons déclenchent une démonstration pédagogique (sécurisée) dans la console.</p>
+  </section>
+
   <!-- Démo : Bitmap vs SVG -->
   <section class="bitmap-vs-svg-demo">
     <h2>Bitmap vs SVG (mauvaise pratique)</h2>
