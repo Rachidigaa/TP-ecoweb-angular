@@ -60,6 +60,48 @@ export default class HomeComponent implements OnInit {
     .then(res => res.json())
     .then(data => console.log('Fetch inutile pour bfcache', data));
 
+  // Mauvaise pratique : "islands" implémentées de façon naïve
+  // - on récupère la page entière très fréquemment et on remplace de larges
+  //   portions du DOM en faisant du scraping HTML côté client
+  // - pas de diff, pas d'annulation, polling agressif -> surcharge réseau/CPU
+  setInterval(() => {
+    // Requête régulière vers la page racine (ou une route lourde)
+    fetch(window.location.href, { cache: 'no-store' })
+      .then(r => r.text())
+      .then(html => {
+        try {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          // On remplace naïvement la zone .news-feed par le HTML extrait de la page
+          const newFeed = doc.querySelector('.news-feed');
+          const currentFeed = document.querySelector('.news-feed');
+          if (newFeed && currentFeed) {
+            // Mauvais : écrase le DOM et tous les listeners, provoque des reflows
+            currentFeed.innerHTML = newFeed.innerHTML;
+            console.log('Mauvais refresh d\'îlot: .news-feed remplacée par scraping');
+          }
+        } catch (e) {
+          console.error('Erreur lors du mauvais rafraîchissement d\'îlot', e);
+        }
+      });
+  }, 2000); // polling toutes les 2 secondes (très agressif)
+
+  // Mauvaise pratique supplémentaire : rafraîchir chaque "ilot" via requêtes complètes
+  const islands = ['.news-feed', '.tags', '.article-list'];
+  setInterval(() => {
+    islands.forEach(sel => {
+      fetch(window.location.href, { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const src = doc.querySelector(sel);
+          const dest = document.querySelector(sel);
+          if (src && dest) dest.innerHTML = src.innerHTML; // remplace sans considération
+        });
+    });
+  }, 3000); // autre timer, double polling inutile
+
   // Mauvaise pratique : charger plusieurs scripts externes inutiles
   const scripts = [
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js',
