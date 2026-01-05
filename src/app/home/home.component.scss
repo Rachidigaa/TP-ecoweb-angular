@@ -23,3 +23,54 @@ app-home home-component div.banner {
   left: 0;
   top: 58px;
 }
+
+/* Exemple de mauvaise pratique : duplication de règles identiques non groupées */
+
+h1 {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.article-title {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.header-title {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.my-component h1 {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.my-component h2 {
+  background-color: gray;
+  color: navy;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
