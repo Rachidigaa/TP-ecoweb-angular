@@ -18,6 +18,10 @@
       src="https://kit.fontawesome.com/d0dc468526.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Mauvaise pratique pédagogique : charger des bibliothèques complètes depuis des CDN
+         (ex: jQuery complet, Lodash) alors que l'app n'utilise qu'une petite portion -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-/xUj+3OJ+Y3Gk6vJvF6yBfMZ6tYd2i1gX9f5e6w5qXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="" crossorigin="anonymous"></script>
   </head>
   <body>
     <app-root></app-root>

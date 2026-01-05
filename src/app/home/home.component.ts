@@ -102,6 +102,14 @@ export default class HomeComponent implements OnInit {
     });
   }, 3000); // autre timer, double polling inutile
 
+    // Mauvaise pratique : utiliser une bibliothèque lourde (ex: jQuery) pour une simple tâche
+    // (ici on suppose que jQuery est chargé via <script> dans index.html)
+    if ((window as any).$) {
+      // Mauvais : dépendance globale et utilisation de jQuery pour une manipulation triviale
+      (window as any).$('.title').css('color', 'magenta');
+      console.log('Utilisation de jQuery pour une tâche mineure (mauvais exemple)');
+    }
+
   // Mauvaise pratique : animation JS lourde qui force le layout à chaque frame
   (function startBadJsAnimation() {
     const el = document.getElementById('js-anim-box');
