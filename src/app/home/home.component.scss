@@ -1,4 +1,19 @@
-.banner {
+/* Mauvaise pratique : sélecteurs extrêmement précis et imbriqués */
+
+app-home home-component div.banner div.title {
+  font-family: var(--font-titillium);
+  font-size: 3.5rem;
+  padding-bottom: 0.5rem;
+  color: yellow; /* exemple de style supplémentaire pour bien visualiser l'effet */
+}
+
+app-home home-component div.banner div.description {
+  font-size: 1.5rem;
+  font-weight: 300 !important;
+  color: orange; /* mauvaise pratique : couleur inline inutilement spécifique */
+}
+
+app-home home-component div.banner {
   background-color: var(--green-color);
   text-align: center;
   color: #fff;
@@ -7,14 +22,4 @@
   width: 100%;
   left: 0;
   top: 58px;
-  .title {
-    font-family: var(--font-titillium);
-    font-size: 3.5rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .description {
-    font-size: 1.5rem;
-    font-weight: 300 !important;
-  }
 }
