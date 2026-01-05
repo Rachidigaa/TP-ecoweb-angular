@@ -59,6 +59,17 @@ export default class HomeComponent implements OnInit {
   fetch('https://jsonplaceholder.typicode.com/posts')
     .then(res => res.json())
     .then(data => console.log('Fetch inutile pour bfcache', data));
+
+  // Mauvaise pratique : charger plusieurs scripts externes inutiles
+  const scripts = [
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.4/axios.min.js'
+  ];
+  scripts.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    document.body.appendChild(s); // chaque script = requête HTTP
+  });
 }
 
   selectTag(tag: string): void {
