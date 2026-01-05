@@ -1,11 +1,30 @@
-<input
-  type="text"
-  [(ngModel)]="tagInput"
-  (keyup.enter)="addTag()"
-  class="form-control"
-  placeholder="Enter tags"
-  (blur)="onTouched()"
-/>
+<!-- MAUVAISE PRATIQUE BP14: Autocomplete avec appel API à chaque frappe -->
+<div class="autocomplete-container">
+  <input
+    type="text"
+    [(ngModel)]="tagInput"
+    (input)="onTagInputChange()"
+    (keyup.enter)="addTag()"
+    (blur)="hideSuggestions()"
+    class="form-control"
+    placeholder="Enter tags"
+  />
+
+  <!-- MAUVAISE PRATIQUE BP14: Dropdown d'autocomplete qui déclenche des appels serveur inutiles -->
+  <div class="autocomplete-suggestions" *ngIf="showSuggestions()">
+    <div
+      *ngFor="let suggestion of tagSuggestions()"
+      class="suggestion-item"
+      (mousedown)="selectSuggestion(suggestion)"
+    >
+      {{ suggestion }}
+    </div>
+    <div *ngIf="tagSuggestions().length === 0" class="no-suggestions">
+      No suggestions found
+    </div>
+  </div>
+</div>
+
 <div class="tag-list">
   <ng-container *ngFor="let item of tagsSelected()">
     <div class="tag-default tag-pill">

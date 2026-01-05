@@ -1,3 +1,38 @@
+// MAUVAISE PRATIQUE BP14: Styles pour l'autocomplete non optimisée
+.autocomplete-container {
+  position: relative;
+
+  .autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--extra-white-gray-color);
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .suggestion-item {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: var(--white-gray-color);
+      }
+    }
+
+    .no-suggestions {
+      padding: 0.5rem 1rem;
+      color: var(--gray-color);
+      font-style: italic;
+    }
+  }
+}
+
 .tag-list {
   margin-top: 2px;
   display: flex;
