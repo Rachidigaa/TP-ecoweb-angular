@@ -4,6 +4,9 @@ body {
   font-family: var(--font-source-sans);
 }
 
+/* Import du fichier de mauvaise pratique font (exemple pédagogique) */
+@import "styles/bad-fonts";
+
 .form-control:focus {
   box-shadow: none;
 }

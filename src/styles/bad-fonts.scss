@@ -1,0 +1,39 @@
+/* Mauvaise pratique : chargement inconditionnel d'une font externe
+   - Utilise @import pour charger Google Fonts (bloquant et moins performant)
+   - Ne respecte pas la préférence `prefers-reduced-data`
+   - Définit un @font-face depuis un CDN externe et utilise `font-display: block`
+   --> Résultat : téléchargement forcé, blocage de l'affichage, consommation de bande-passante */
+
+/* Chargement via @import (mauvais : empêche les optimisations comme preconnect)
+   et force le téléchargement de la font Montserrat pour tous les visiteurs */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Mauvais usage de @font-face pointant vers un CDN externe lourd */
+@font-face {
+  font-family: 'Montserrat-Bad';
+  src: url('https://cdn.example.com/fonts/montserrat-latin-regular-heavy.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  /* Mauvais : `block` bloque le rendu texte jusqu'au chargement complet */
+  font-display: block;
+}
+
+/* Mauvais : utilisation systématique de la font distante en priorité
+   sans vérification de `prefers-reduced-data` ou fallback système */
+body {
+  font-family: 'Montserrat', 'Montserrat-Bad', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* Forcer l'utilisation de la police externe sur certains éléments */
+.force-external-font {
+  font-family: 'Montserrat-Bad', 'Montserrat', 'Arial', sans-serif;
+  font-weight: 700;
+}
+
+/* Exemple : inclusion répétée (doublons) et absence de fallback progressif */
+h1, h2, h3 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+}
