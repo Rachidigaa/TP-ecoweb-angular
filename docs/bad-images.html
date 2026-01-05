@@ -48,6 +48,32 @@
       <li>Servez les images optimisées côté serveur (compression, conversion en WebP/AVIF).</li>
       <li>Comparez poids & pixels avec <a href="https://yellowlab.tools">yellowlab.tools</a> ou Lighthouse.</li>
     </ul>
+    
+      <h2>Mauvaise pratique : préférer les bitmaps quand un SVG suffit</h2>
+      <p>Les formats matriciels (PNG, JPG) sont parfois beaucoup plus lourds qu'un SVG équivalent. Préférez les icônes SVG ou les glyphes quand c'est possible.</p>
+    
+      <section>
+        <h3>Comparaison (exemple)</h3>
+        <p>Même icône :
+          <ul>
+            <li>Bitmap brut (ex : BMP) : ~118 Ko</li>
+            <li>JPEG (qualité 90%) : ~6.5 Ko</li>
+            <li>PNG (optimisé) : ~3.8 Ko</li>
+            <li>SVG (minifié) : ~0.7 Ko</li>
+          </ul>
+        </p>
+    
+        <p>Mauvais exemple (bitmap utilisé pour une icône simple) :</p>
+        <pre>&lt;img src="/assets/images/icon-example.png" alt="icône bitmap" width="24" height="24"&gt;</pre>
+    
+        <p>Bonne pratique (SVG léger, vectoriel et infiniment redimensionnable) :</p>
+        <pre>&lt;img src="/assets/images/icon-example.svg" alt="icône SVG" width="24" height="24"&gt;</pre>
+    
+        <p>Astuce : minifiez vos SVG avec <a href="https://jakearchibald.github.io/svgomg/">SVGOMG</a> pour réduire encore le poids.</p>
+      </section>
+    
+      <h3>Démo</h3>
+      <p>Dans la plupart des cas, remplacez vos petites images bitmap par un SVG ou une font d'icônes pour réduire les transferts et gagner en qualité d'affichage.</p>
 
   </body>
 </html>

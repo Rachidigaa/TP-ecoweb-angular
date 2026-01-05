@@ -26,4 +26,25 @@
     <img id="demo-large-thumb" src="../../assets/16note.png" alt="Vignette mal optimisée" style="width:70px; height:60px;">
     <p>Code : &lt;img src="/assets/images/large-photo-1920x1080.png" style="width:70px;height:60px;"&gt;</p>
   </section>
+
+  <!-- Démo : Bitmap vs SVG -->
+  <section class="bitmap-vs-svg-demo">
+    <h2>Bitmap vs SVG (mauvaise pratique)</h2>
+    <p>Exemple : icône simple fournie en bitmap (PNG) vs SVG (meilleure pratique).</p>
+
+    <div style="display:flex; gap:2rem; align-items:center;">
+      <figure>
+        <img src="../../assets/images/icon-exemple.svg" alt="Icône bitmap (PNG)" width="48" height="48">
+        <figcaption>Bitmap PNG (mauvais) — souvent plus lourd</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../../assets/images/icon-exemple.svg" alt="Icône SVG" width="48" height="48">
+        <figcaption>SVG (bon) — vectoriel et léger</figcaption>
+      </figure>
+    </div>
+
+    <p>Code (mauvais) : <code>&lt;img src="/assets/images/icon-example.png" width="48" height="48"&gt;</code></p>
+    <p>Code (bon) : <code>&lt;img src="/assets/images/icon-example.svg" width="48" height="48"&gt;</code></p>
+  </section>
 </div>
