@@ -50,6 +50,15 @@ export default class ArticleDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.#articleStore.getArticleDetail(this.slug);
+    // ❌ Mauvaise pratique : ne pas stocker le user localement et refaire des fetchs inutiles
+    // Exemple : on récupère le nom de l'utilisateur depuis le serveur à chaque affichage
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+      .then(res => res.json())
+      .then(user => console.log('Utilisateur récupéré à chaque fois:', user.name));
+
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+      .then(res => res.json())
+      .then(user => console.log('Nouvelle requête inutile:', user.name));
   }
 
   toggleFavorite(article: Article): void {
