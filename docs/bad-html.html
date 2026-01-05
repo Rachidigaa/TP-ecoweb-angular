@@ -1,0 +1,58 @@
+<!--
+  Exemple de mauvaise pratique : HTML mal formé
+  - Le but : montrer des anti-patterns qui forcent le navigateur à "corriger" le DOM à l'affichage.
+  - Ces erreurs impactent l'accessibilité, le SEO et la performance (réparations dynamiques).
+  - Validez vos pages avec le validateur W3C: https://validator.w3.org/ ou https://validator.w3.org/nu/
+-->
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exemples HTML mal formé (mauvaise pratique)</title>
+  </head>
+  <body>
+
+    <!-- 1) Balises non fermées / imbriquement incorrect -->
+    <div class="mismatch">
+      <h2>Imbriquement incorrect : &lt;p&gt; non fermé et &lt;div&gt; imbriqué dans &lt;p&gt;
+      <p>Ce paragraphe n'est pas fermé et contient un div qui devrait être hors du paragraphe
+        <div class="inner">Contenu du div</div>
+    <!-- Fermeture manquante du paragraphe et du h2 -->
+
+    <!-- 2) Ancres imbriquées (anchor nesting) - invalide -->
+    <a href="#">Lien parent
+      <div class="click-area">
+        Cliquable
+        <a href="#">Lien enfant (imbriqué)</a>
+      </div>
+    </a>
+
+    <!-- 3) Attribut malformé (guillemet manquant) -->
+    <img src="/assets/images/logo.png alt=missing-quote>
+
+    <!-- 4) IDs dupliqués -->
+    <div id="same">Premier élément avec id="same"</div>
+    <div id="same">Second élément avec id="same" (dupliqué)</div>
+
+    <!-- 5) Éléments de bloc à l'intérieur d'éléments inline -->
+    <span class="bad-inline">
+      Texte de span
+      <div>Bloc à l'intérieur d'un span (mauvais)</div>
+    </span>
+
+    <!-- 6) Erreur de structure complexe : table mal formée -->
+    <table>
+      <tr>
+        <td>Cellule 1
+      <tr>
+        <td>Cellule 2</td>
+      </tr>
+    </table>
+
+    <!-- Notes : ces erreurs seront souvent "réparées" par le navigateur en runtime,
+         mais cela implique des manipulations DOM automatiques et des coûts supplémentaires.
+         Utilisez le validateur W3C pour détecter et corriger ces problèmes. -->
+
+  </body>
+</html>
