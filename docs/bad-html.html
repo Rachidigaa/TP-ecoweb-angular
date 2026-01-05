@@ -54,5 +54,40 @@
          mais cela implique des manipulations DOM automatiques et des coûts supplémentaires.
          Utilisez le validateur W3C pour détecter et corriger ces problèmes. -->
 
+    <!-- 7) Mauvaise pratique : CSS et JS embarqués dans la page (inline) -->
+    <!-- Mauvais : charger tout le CSS ou JS directement dans le HTML multiplie le transfert
+         pour chaque page et empêche le navigateur de réutiliser les ressources via le cache. -->
+
+    <!-- Exemple de CSS inline (mauvais) -->
+    <style type="text/css">
+      /* Toute la feuille de style du site collée ici (mauvais) */
+      body { background: #fff; color: #222; font-family: Arial, sans-serif; }
+      .site { max-width: 1200px; margin: 0 auto; }
+      /* ... des centaines de règles supplémentaires ... */
+    </style>
+
+    <!-- Exemple de JS inline (mauvais) -->
+    <script>
+      // Chargement d'une librairie et d'un script applicatif directement dans le HTML
+      // (mauvais : empêche le caching séparé et augmente le poids de la page)
+      (function(){
+        // simulation d'un code volumineux embarqué
+        function init() {
+          // beaucoup de logique et d'écouteurs d'événements
+          document.querySelectorAll('.btn').forEach(function(b){
+            b.addEventListener('click', function(e){ console.log('clicked'); });
+          });
+        }
+        init();
+      })();
+    </script>
+
+    <!-- Bonne pratique : externaliser CSS et JS pour profiter du cache -->
+    <!--
+      <link rel="stylesheet" href="/css/styles.css">
+      <script src="/js/vendor.bundle.js" defer></script>
+      <script src="/js/app.bundle.js" defer></script>
+    -->
+
   </body>
 </html>
