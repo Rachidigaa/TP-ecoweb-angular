@@ -26,3 +26,9 @@ body {
     background-color: var(--extra-green-color);
   }
 }
+
+/* CSS Home */
+@import "./app/home/home.component.scss";
+
+/* CSS Article Detail */
+@import "./app/article-detail/article-detail.component.scss";
