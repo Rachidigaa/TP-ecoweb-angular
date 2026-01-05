@@ -6,6 +6,7 @@ body {
 
 /* Import du fichier de mauvaise pratique font (exemple pédagogique) */
 @import "styles/bad-fonts";
+@import "styles/bad-glyphs";
 
 .form-control:focus {
   box-shadow: none;

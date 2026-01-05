@@ -1,0 +1,69 @@
+/* Mauvaise pratique : utiliser des images séparées pour chaque icône/glyphe
+   - multiplie les requêtes HTTP
+   - augmente le poids global (pas de sprites ni glyphs)
+   - n'utilise pas de polices d'icônes ni de glyphs système
+   - utilise parfois des data:URI lourds ou des images haute-résolution inutiles
+
+   Cet exemple illustre plusieurs anti-patterns :
+   - background-image pour petites icônes répétés partout
+   - utilisation d'images inline <img> pour des éléments récurrents
+   - absence de sprites / icon-font / SVG symbol reuse
+*/
+
+/* Exemple CSS : chaque icône est une image distincte (mauvais) */
+.bad-glyphs-demo .icon-email {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../assets/email.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bad-glyphs-demo .icon-like {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../assets/like.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Mauvais : data-uri inline (exemple court ici) utilisé partout -> augmente la taille CSS */
+.bad-glyphs-demo .icon-badge {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  /* data-uri d'exemple (1x1 png raccourci) — en pratique des images encodées plus grandes seraient très lourdes */
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=');
+  background-size: contain;
+}
+
+/* Mauvais : multiplication d'éléments <img> dans le DOM au lieu d'utiliser une police/glyphe */
+/* HTML (mauvais exemple d'usage) :
+   <button class="btn">
+     <img src="/assets/icons/like.png" alt="like" class="inline-icon"> J'aime
+   </button>
+   Répéter cette balise à chaque occurrence crée des requêtes distinctes et augmente le DOM.
+*/
+
+/* Mauvais : absence de fallback / optimisation (no-preload, no-sprite). */
+.bad-glyphs-demo .navigation .item {
+  padding-left: 36px; /* laisse de l'espace pour l'icône */
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.bad-glyphs-demo .navigation .item.email { background-image: url('/assets/icons/email.png'); }
+.bad-glyphs-demo .navigation .item.like  { background-image: url('/assets/icons/like.png'); }
+.bad-glyphs-demo .navigation .item.share { background-image: url('/assets/icons/share.png'); }
+
+/* Mauvaise pratique supplémentaire : répéter la même image dans plusieurs règles au lieu d'utiliser une variable/sprite */
+.bad-glyphs-demo .footer .social-facebook { background-image: url('/assets/icons/facebook.png'); }
+.bad-glyphs-demo .header .social-facebook { background-image: url('/assets/icons/facebook.png'); }
+.bad-glyphs-demo .sidebar .social-facebook { background-image: url('/assets/icons/facebook.png'); }
+
+/* Note pédagogique : pour la bonne pratique, préférez :
+   - une police d'icônes ou SVG sprite <symbol> réutilisable ou
+   - les glyphes système (font icons) pour petites icônes monochromes
+*/
