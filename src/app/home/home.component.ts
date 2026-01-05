@@ -38,12 +38,28 @@ export default class HomeComponent implements OnInit {
   readonly articleList = this.#homeStore.selectors.articleList;
 
   ngOnInit(): void {
-    if (this.isAuthenticated()) {
-      this.toggleFeed(FEED_TYPE.yourFeed);
-    } else {
-      this.toggleFeed(FEED_TYPE.globalFeed);
-    }
+  if (this.isAuthenticated()) {
+    this.toggleFeed(FEED_TYPE.yourFeed);
+  } else {
+    this.toggleFeed(FEED_TYPE.globalFeed);
   }
+
+  // Mauvaise pratique : Timer infini, surcharge CPU et bfcache
+  setInterval(() => {
+    console.log('Timer inutile actif, surcharge bfcache !');
+  }, 1000);
+
+  // Mauvaise pratique : beforeunload lourd, empêche bfcache
+  window.addEventListener('beforeunload', () => {
+    console.log('Utilisateur quitte la page, traitement inutile...');
+    for (let i = 0; i < 10000000; i++) {} // boucle inutile
+  });
+
+  //  Mauvaise pratique : fetch non annulé, surcharge réseau et bfcache
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(res => res.json())
+    .then(data => console.log('Fetch inutile pour bfcache', data));
+}
 
   selectTag(tag: string): void {
     this.#homeStore.queryArticle({
