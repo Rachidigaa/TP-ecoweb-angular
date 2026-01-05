@@ -97,3 +97,78 @@ h3 {
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
 }
+
+/* Mauvaise pratique : print CSS verbeuse et contre-productive
+   - conserve et force l'affichage des entêtes/pieds/images
+   - utilise des couleurs et tailles inutiles (gaspillage d'encre)
+   - abonde en !important et sélecteurs excessivement spécifiques */
+
+@media print {
+  /* Mauvais : impose un fond coloré (gaspille l'encre) */
+  body {
+    background-color: #222 !important;
+    color: #fff !important;
+    font-family: "Arial Black", Gadget, sans-serif !important;
+    font-size: 18pt !important; /* beaucoup trop grand pour l'impression */
+    line-height: 2 !important;
+  }
+
+  /* Mauvais : conserve header/footer et forçage visible */
+  html body div#header, header, .site-header, #banner {
+    display: block !important;
+    visibility: visible !important;
+    height: 120px !important;
+    background: linear-gradient(#000, #444) !important; /* background inutile */
+  }
+
+  footer, #footer, .site-footer {
+    display: block !important;
+    visibility: visible !important;
+    border-top: 3px solid #000 !important;
+    padding: 20px !important;
+  }
+
+  /* Mauvais : n'enlève pas les images, impose qu'elles restent et soient grandes */
+  img, .avatar, .article img {
+    display: inline !important;
+    max-width: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Mauvais : garde les menus, barres latérales et éléments visuellement inutiles */
+  nav, .menu, .sidebar, #menuright, .ads, .related {
+    display: block !important;
+    color: #333 !important;
+    background: #eee !important;
+    border: 1px solid #ccc !important;
+  }
+
+  /* Mauvais : règle globale très verbeuse et non sélective */
+  * {
+    color: inherit !important;
+    background: inherit !important;
+    font-size: 18pt !important;
+  }
+
+  /* Mauvais : conservation des liens avec décorations colorées */
+  a, a:visited {
+    color: blue !important;
+    text-decoration: underline !important;
+    background: yellow !important;
+  }
+
+  /* Mauvais : des règles répétées et trop spécifiques */
+  #content .article .meta p, #content .article .meta span {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* Mauvais : empêche la réduction naturelle des marges pour l'impression */
+  @page {
+    margin: 0 !important;
+    size: auto !important;
+  }
+}
