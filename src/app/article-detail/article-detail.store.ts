@@ -79,6 +79,8 @@ export class ArticleDetailStore
         .pipe(
           tapResponse(
             () => {
+              // Mauvaise pratique : recharger toutes les données
+              this.getArticleDetail(request.slug);
               this.getArticleComments(request.slug);
             },
             (error) => {
@@ -99,6 +101,8 @@ export class ArticleDetailStore
         .pipe(
           tapResponse(
             () => {
+              // Mauvaise pratique : recharger toutes les données
+              this.getArticleDetail(request.slug);
               this.getArticleComments(request.slug);
             },
             (error) => {
