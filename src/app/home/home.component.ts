@@ -102,6 +102,36 @@ export default class HomeComponent implements OnInit {
     });
   }, 3000); // autre timer, double polling inutile
 
+  // Mauvaise pratique : animation JS lourde qui force le layout à chaque frame
+  (function startBadJsAnimation() {
+    const el = document.getElementById('js-anim-box');
+    if (!el) return;
+    let growing = true;
+    let width = 120;
+
+    function frame() {
+      // Mauvais : calculs et écritures qui forcent le reflow (layout)
+      const parentWidth = el?.parentElement ? el?.parentElement.clientWidth : 800;
+      if (growing) {
+        width += 4; // cause reflow
+        if (width > Math.min(240, parentWidth - 10)) growing = false;
+      } else {
+        width -= 4;
+        if (width < 120) growing = true;
+      }
+      // Mauvais : modification directe des propriétés de layout
+      if (el) {
+        el.style.width = width + 'px';
+        el.style.height = width + 'px';
+      }
+      // relancer sans throttle -> forte consommation CPU
+      requestAnimationFrame(frame);
+    }
+
+    // démarrage immédiat (mauvais si l'utilisateur préfère reduced-motion)
+    requestAnimationFrame(frame);
+  })();
+
   // Mauvaise pratique : charger plusieurs scripts externes inutiles
   const scripts = [
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js',

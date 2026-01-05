@@ -172,3 +172,45 @@ h3 {
     size: auto !important;
   }
 }
+
+/* Mauvaise pratique : animations coûteuses et non optimisées */
+/* - animation/transition sur des propriétés de layout (width/height/left/top) provoque des reflows
+   - utilisation de 'transition: all' ou d'animations infinies sur des propriétés non GPU-accélérées
+   - absence de gestion de la préférence 'prefers-reduced-motion' et pas d'utilisation de 'will-change' correctement
+   - exemples JS : modification fréquente de styles provoquant des recalculs de layout */
+
+.bad-animations {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.bad-anim-box {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, #ff7f7f, #ffbf7f);
+  border-radius: 8px;
+  /* Mauvais : transition sur toutes les propriétés -> triggers reflow/repaint */
+  transition: all 0.6s linear;
+  /* Mauvais : animation qui modifie width/height (layout) en boucle */
+  animation: bad-grow-shrink 1s infinite linear;
+}
+
+@keyframes bad-grow-shrink {
+  0% { width: 120px; height: 120px; }
+  50% { width: 240px; height: 240px; }
+  100% { width: 120px; height: 120px; }
+}
+
+.js-anim-box {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, #7fbfff, #7fffd4);
+  border-radius: 8px;
+  position: relative;
+  /* Mauvais : will-change absent ou mal utilisé; nous allons modifier 'left' via JS (causes layout)
+     Au lieu de modifier transform, on change 'left' et 'width' souvent. */
+}
+
+/* Note pédagogique : la bonne pratique serait d'utiliser transform/opacity et prefers-reduced-motion */

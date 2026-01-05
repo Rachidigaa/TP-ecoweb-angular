@@ -78,6 +78,19 @@
     </div>
   </section>
 
+  <!-- Démo : Mauvaise pratique d'animations (CSS layout + JS thrashing) -->
+  <section class="animations-demo">
+    <h2>Mauvaise pratique : animations coûteuses</h2>
+    <p>Exemples d'animations qui provoquent des reflows/répaints lourds : CSS qui change <code>width/height</code>, et JS qui met à jour des styles de layout en continu.</p>
+
+    <div class="bad-animations">
+      <div class="bad-anim-box" aria-hidden="true"></div>
+      <div class="js-anim-box" id="js-anim-box" aria-hidden="true"></div>
+    </div>
+
+    <p>Note : ces animations ne respectent pas la préférence <code>prefers-reduced-motion</code> et modifient des propriétés de layout, ce qui est coûteux.</p>
+  </section>
+
   <!-- Démo : Bitmap vs SVG -->
   <section class="bitmap-vs-svg-demo">
     <h2>Bitmap vs SVG (mauvaise pratique)</h2>
