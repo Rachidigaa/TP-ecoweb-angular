@@ -75,6 +75,20 @@
       <h3>Démo</h3>
       <p>Dans la plupart des cas, remplacez vos petites images bitmap par un SVG ou une font d'icônes pour réduire les transferts et gagner en qualité d'affichage.</p>
 
+      <h2>Lazy loading : éviter de charger des ressources hors-écran</h2>
+      <p>Chargement paresseux (lazy loading) des images et iframes : utilisez l'attribut <code>loading="lazy"</code> pour laisser le navigateur différer le téléchargement des ressources situées hors de la zone visible.</p>
+
+      <section>
+        <h3>Exemples</h3>
+        <p>Mauvais (chargement immédiat) : <code>&lt;img src="large-photo.jpg" alt="..."&gt;</code></p>
+        <p>Bon (lazy) : <code>&lt;img src="large-photo.jpg" alt="..." loading="lazy"&gt;</code></p>
+
+        <p>Mauvais (iframe lourde chargée immédiatement) : <code>&lt;iframe src="/docs/example-iframe.html" title="..."&gt;&lt;/iframe&gt;</code></p>
+        <p>Bon (lazy) : <code>&lt;iframe src="/docs/example-iframe.html" title="..." loading="lazy"&gt;&lt;/iframe&gt;</code></p>
+
+        <p>Note : pour une compatibilité plus fine avec les navigateurs ou des comportements avancés (chargement au survol, intersection thresholds), utilisez IntersectionObserver côté JS.</p>
+      </section>
+
       <h2>SVG : non optimisé vs optimisé (exemple pédagogique)</h2>
       <p>Un SVG non optimisé peut contenir des commentaires, métadonnées et définitions inutilisées qui alourdissent le fichier. Minimisez et nettoyez vos SVG (SVGO/SVGOMG) avant mise en production.</p>
 

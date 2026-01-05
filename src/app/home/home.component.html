@@ -43,6 +43,41 @@
     <p>Le fichier non optimisé contient métadonnées, commentaires et définitions inutilisées ; la version optimisée est minifiée et beaucoup plus légère.</p>
   </section>
 
+  <!-- Démo : lazy loading (mauvais vs bon) -->
+  <section class="lazy-loading-demo">
+    <h2>Lazy loading — images et iframes</h2>
+
+    <h3>Image : non-lazy vs lazy</h3>
+    <div style="display:flex; gap:2rem; align-items:center;">
+      <div>
+        <p>Mauvais (chargement immédiat) :</p>
+        <img src="/assets/images/large-photo-1920x1080.png" alt="large" width="240" height="135">
+        <pre>&lt;img src="/assets/images/large-photo-1920x1080.png" width="240" height="135"&gt;</pre>
+      </div>
+
+      <div>
+        <p>Bon (lazy) :</p>
+        <img src="/assets/images/large-photo-1920x1080.png" alt="large" loading="lazy" width="240" height="135">
+        <pre>&lt;img src="/assets/images/large-photo-1920x1080.png" loading="lazy" width="240" height="135"&gt;</pre>
+      </div>
+    </div>
+
+    <h3>Iframe : non-lazy vs lazy</h3>
+    <div style="display:flex; gap:2rem; align-items:flex-start;">
+      <div>
+        <p>Mauvais (chargement immédiat) :</p>
+        <iframe src="/docs/example-iframe.html" title="Iframe lourd" width="400" height="200"></iframe>
+        <pre>&lt;iframe src="/docs/example-iframe.html" title="Iframe lourd" width="400" height="200"&gt;&lt;/iframe&gt;</pre>
+      </div>
+
+      <div>
+        <p>Bon (lazy) :</p>
+        <iframe src="/docs/example-iframe.html" title="Iframe lourd" loading="lazy" width="400" height="200"></iframe>
+        <pre>&lt;iframe src="/docs/example-iframe.html" title="Iframe lourd" loading="lazy" width="400" height="200"&gt;&lt;/iframe&gt;</pre>
+      </div>
+    </div>
+  </section>
+
   <!-- Démo : Bitmap vs SVG -->
   <section class="bitmap-vs-svg-demo">
     <h2>Bitmap vs SVG (mauvaise pratique)</h2>
