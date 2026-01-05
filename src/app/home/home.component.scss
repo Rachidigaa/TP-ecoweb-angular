@@ -225,5 +225,28 @@ h3 {
   justify-content: center;
 }
 
+/* Repaint vs Reflow demo styles */
+.repaint-demo { margin-top: 2rem; }
+.repaint-box {
+  width: 120px;
+  height: 120px;
+  background: #f0f0f0;
+  border: 2px solid #999;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Bad: repaint-heavy example (we'll change background/border via JS) */
+.repaint-bad { }
+
+/* Good: use GPU-friendly transform/opacity and will-change */
+.repaint-good {
+  transition: transform 200ms ease, opacity 200ms ease;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .repaint-good { transition: none; }
+}
+
 
 /* Note pédagogique : la bonne pratique serait d'utiliser transform/opacity et prefers-reduced-motion */

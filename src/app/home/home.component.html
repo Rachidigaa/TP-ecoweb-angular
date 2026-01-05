@@ -91,6 +91,28 @@
     <p>Note : ces animations ne respectent pas la préférence <code>prefers-reduced-motion</code> et modifient des propriétés de layout, ce qui est coûteux.</p>
   </section>
 
+  <!-- Démo : repaint vs reflow (mauvais vs bon) -->
+  <section class="repaint-demo">
+    <h2>Repaint vs Reflow — exemples</h2>
+    <p>Repaint = changement d'apparence (couleur, bordure). Reflow = recalcul de la mise en page (width/height/position). Évitez les changements répétitifs qui déclenchent ces opérations.</p>
+
+    <div style="display:flex; gap:2rem; align-items:center;">
+      <div>
+        <p>Mauvais (repaint-heavy) :</p>
+        <div class="repaint-box repaint-bad" id="repaint-bad-box">Bad</div>
+        <div><button id="start-bad-repaint">Start bad repaint</button><button id="stop-bad-repaint">Stop</button></div>
+        <pre>&lt;!-- JS change backgroundColor / borderColor repeatedly --&gt;</pre>
+      </div>
+
+      <div>
+        <p>Bon (GPU-friendly) :</p>
+        <div class="repaint-box repaint-good" id="repaint-good-box">Good</div>
+        <div><button id="toggle-good-repaint">Toggle good effect</button></div>
+        <pre>&lt;!-- CSS transform/opacity + will-change, respects prefers-reduced-motion --&gt;</pre>
+      </div>
+    </div>
+  </section>
+
   <!-- Démo : mauvaise pratique - modifications successives causant plusieurs reflows -->
   <section class="reflow-demo">
     <h2>Mauvaise pratique : générer plusieurs reflows</h2>

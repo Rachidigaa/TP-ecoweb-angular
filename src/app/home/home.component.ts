@@ -214,6 +214,53 @@ export default class HomeComponent implements OnInit {
     goodBtn.addEventListener('click', goodReflow);
   })();
 
+  // Démo repaint vs reflow : mauvais (repaint-heavy) vs bon (transform)
+  (function repaintDemo() {
+    const badBox = document.getElementById('repaint-bad-box') as HTMLElement | null;
+    const goodBox = document.getElementById('repaint-good-box') as HTMLElement | null;
+    const startBad = document.getElementById('start-bad-repaint');
+    const stopBad = document.getElementById('stop-bad-repaint');
+    const toggleGood = document.getElementById('toggle-good-repaint');
+    if (!badBox || !goodBox || !startBad || !stopBad || !toggleGood) return;
+
+    // Bad: rapid style changes that cause many repaints
+    let badInterval: number | null = null;
+    startBad.addEventListener('click', () => {
+      if (badInterval) return;
+      badInterval = window.setInterval(() => {
+        // alternate background and border color (repaints)
+        badBox.style.background = badBox.style.background === 'rgb(240, 240, 240)' ? '#ffecec' : '#f0f0f0';
+        badBox.style.borderColor = badBox.style.borderColor === 'rgb(153, 153, 153)' ? '#ff0000' : '#999';
+      }, 120);
+      console.log('Démarrage du mauvais repaint (interval)');
+    });
+
+    stopBad.addEventListener('click', () => {
+      if (badInterval) {
+        clearInterval(badInterval);
+        badInterval = null;
+        console.log('Arrêt du mauvais repaint');
+      }
+    });
+
+    // Good: toggle a class that uses transform/opacity (GPU-friendly)
+    toggleGood.addEventListener('click', () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        console.log('prefers-reduced-motion: reduce, effet désactivé');
+        return;
+      }
+      goodBox.classList.toggle('active');
+      // toggle style via transform
+      if (goodBox.classList.contains('active')) {
+        goodBox.style.transform = 'scale(1.05)';
+        goodBox.style.opacity = '0.95';
+      } else {
+        goodBox.style.transform = 'none';
+        goodBox.style.opacity = '1';
+      }
+    });
+  })();
+
   // Mauvaise pratique : charger plusieurs scripts externes inutiles
   const scripts = [
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js',
